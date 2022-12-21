@@ -65,8 +65,9 @@ class _HomeViewState extends State<HomeView> {
                   //physics: ,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       ButtonApp(txt: "Criar pedido",),
+                      SizedBox(height: 8,),
                       ButtonApp(txt: "Listar pedidos",),
                     ],
                   ),
