@@ -12,9 +12,7 @@ import cielo.sdk.order.payment.PaymentListener
 //
 
 class PaymentManager {
-    fun ocPayment(paymenteValue: Long) : String {
-        var result = ""
-
+    fun ocPayment(paymenteValue: Long, result: io.flutter.plugin.common.MethodChannel.Result) {
         try {
             //  Init and Set order to payment
             LioUtil.getInstance().initOrder()
@@ -25,27 +23,27 @@ class PaymentManager {
             LioUtil.getInstance().payment(object : PaymentListener {
                 override fun onStart() {}
                 override fun onPayment(order: Order) {
-                    result = "Paid"
+                    Log.d("PaymentManager", "Pago!")
+
                     order.markAsPaid()
                     LioUtil.getInstance().updateOrder(order)
-                    Log.d("PaymentManager", "Pago!")
+                    result.success(true)
                 }
 
                 override fun onCancel() {
-                    result = "Cancelled"
                     Log.d("PaymentManager", "Cancelado")
+                    result.success(false)
                 }
 
                 override fun onError(error: PaymentError) {
-                    result = "Error"
                     Log.e("PaymentManager", "Erro ou Negada")
+                    result.success(false)
+
                 }
             }, 1, paymentCode)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-        return ""
     }
 
     fun clearOrderManager() {

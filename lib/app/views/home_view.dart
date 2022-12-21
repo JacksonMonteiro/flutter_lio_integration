@@ -16,9 +16,10 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> initSDK() async {
     try {
-      await channel.invokeMethod("initSDK");
+      var response = await channel.invokeMethod("initSDK");
+      print('initSdkResponse: $response');
     } on PlatformException {
-      print("Erro no Platform Channel");
+      print("Erro no Platform Channel");  
     }
   }
 

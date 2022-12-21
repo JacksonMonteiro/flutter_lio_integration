@@ -1,45 +1,35 @@
 package com.example.stripe
 
-import android.util.Log
+// Cielo Imports
+import cielo.orders.domain.Credentials
+import cielo.orders.domain.Order
+import cielo.orders.domain.ResultOrders
+import cielo.sdk.order.OrderManager
 import io.flutter.embedding.android.FlutterActivity
-
-// Stripe imports
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 
-class MainActivity: FlutterActivity() {
+class MainActivity : FlutterActivity() {
     val CHANNEL = "jacksonmonteiro.space/native"
+
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            CHANNEL
-        ).setMethodCallHandler { call, result ->
-            when (call.method) {
-                "initSDK" -> {
-                    Log.d("MainActivity", "initSDK Called")
-                    Log.d("MainActivity", "Value: ${LioUtil.getInstance().initSDK(this)}")
-                    if (LioUtil.getInstance().initSDK(this)) {
-                        Log.d("MainActivity", "InitSDK return true")
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "initSDK" -> {
+                        LioUtil.getInstance().initSDK(this, result)
                     }
-
-                    result.success(
-                        LioUtil.getInstance().initSDK(this)
-                    )
-                }
-                "startPayment" -> {
-                    Log.d("MainActivity", PaymentManager.getInstance().ocPayment(100).toString())
-                    result.success(
-                        PaymentManager.getInstance().ocPayment(100)
-                    )
-                }
-                else -> {
-                    result.notImplemented()
+                    "startPayment" -> {
+                        PaymentManager.getInstance().ocPayment(100, result)
+                    }
+                    else -> {
+                        result.notImplemented()
+                    }
                 }
             }
-        }
     }
 }

@@ -10,6 +10,7 @@ import cielo.sdk.order.OrderManager
 import cielo.sdk.order.ServiceBindListener
 import cielo.sdk.order.payment.PaymentCode
 import cielo.sdk.order.payment.PaymentListener
+import io.flutter.plugin.common.MethodChannel
 import java.util.*
 import kotlin.Boolean
 import kotlin.Exception
@@ -29,8 +30,7 @@ class LioUtil {
     private lateinit var resultOrders: ResultOrders
     private lateinit var order: Order
 
-    fun initSDK(context: Context?) : Boolean {
-        var result = false
+    fun initSDK(context: Context?, result: MethodChannel.Result) {
         /*======================= Credenciais ======================*/
         credentials =
             Credentials("loIDeZOSihHEaDmutRHUPl3dxJzKIQTgHJ5yncMHqLUNf241vz", "ZjpVpQiUNcO4BLUsnSmwqFCL8AExTqTEZ9kl9vm9lDAdnd3MOy")
@@ -49,9 +49,9 @@ class LioUtil {
                 //Você deve garantir que sua aplicação se conectou com a LIO a partir desse listener
                 //A partir desse momento você pode utilizar as funções do OrderManager, caso contrário uma exceção será lançada.
 
-                result = true
                 Log.e("onServiceBound", "Conectado")
                 setResultOrders(orderManager.retrieveOrders(200, 0)!!)
+                result.success(true)
             }
 
             override fun onServiceUnbound() {
@@ -60,7 +60,6 @@ class LioUtil {
             }
         }
         orderManager.bind(context, serviceBindListener)
-        return result
     }
 
     fun setResultOrders(resultOrders: ResultOrders) {
