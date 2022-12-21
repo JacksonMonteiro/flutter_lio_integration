@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:stripe/app/components/button.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key, required this.title});
+  const HomeView({super.key});
 
-  final String title;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -36,22 +38,45 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    initSDK();
+    //initSDK();
   }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: Stack(
+        children: [
+          Container(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            color: Colors.black,
+            child: Image.asset(
+              'assets/images/inicio_back.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  //physics: ,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ButtonApp(txt: "Criar pedido",),
+                      ButtonApp(txt: "Listar pedidos",),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: _startPayment,
-          child: Text('Iniciar pagamento LIO'),
-        ),
-      )
+      
     );
   }
 }
