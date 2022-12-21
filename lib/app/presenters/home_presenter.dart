@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+
 abstract class HomeContract{
-  
+  goToCreateOrder(){}
+  goToListOrder(){}
 }
 
 class HomePresenter{
@@ -8,11 +11,4 @@ class HomePresenter{
   HomePresenter(this.contract);
 
 
-  void goToCreateOrder(){
-    
-  }
-
-  void goToListOrder(){
-
-  }
 }

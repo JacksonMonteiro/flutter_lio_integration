@@ -3,8 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stripe/app/components/button.dart';
+import 'package:stripe/app/presenters/home_presenter.dart';
+import 'package:stripe/app/views/create_order.dart';
 
 class HomeView extends StatefulWidget {
+  static const routerName = "/home";
   const HomeView({super.key});
 
 
@@ -12,8 +15,21 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> implements HomeContract{
   static const channel = MethodChannel("jacksonmonteiro.space/native");
+
+  late HomePresenter homePresenter;
+
+  @override
+  goToCreateOrder() {
+    Navigator.of(context)
+          .pushNamedAndRemoveUntil(CreateOrder.routerName, (route) => false);
+  }
+  
+  @override
+  goToListOrder() {
+    
+  }
 
 
   Future<void> initSDK() async {
@@ -80,4 +96,5 @@ class _HomeViewState extends State<HomeView> {
       
     );
   }
+  
 }
