@@ -26,6 +26,9 @@ class MainActivity : FlutterActivity() {
                     "startPayment" -> {
                         PaymentManager.getInstance().ocPayment(100, result)
                     }
+                    "unbind" -> {
+                        PaymentManager.getInstance().clearOrderManager()
+                    }
                     else -> {
                         result.notImplemented()
                     }

@@ -5,6 +5,7 @@ abstract class SummaryViewContract {
   void messageError({required String message});
   Future<void> initSDK();
   void initPayment();
+  void back();
 }
 
 class SummaryPresenter {
@@ -35,6 +36,18 @@ class SummaryPresenter {
       }
     } on PlatformException {
       _contract.messageError(message: "Erro ao conectar-se com a LIO");
+    }
+  }
+
+  Future<void> unbind() async{
+    try{
+      print("Chamou o unbind");
+      final back = await channel.invokeMethod("unbind");
+      if(back){
+        _contract.back();
+      }
+    }on PlatformException{
+       _contract.messageError(message: "Error ao desvincular a LIO");
     }
   }
 }

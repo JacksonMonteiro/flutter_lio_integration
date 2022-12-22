@@ -4,6 +4,7 @@ import 'package:stripe/app/components/dialog_message.dart';
 import 'package:stripe/app/components/dialog_message_error.dart';
 import 'package:stripe/app/models/product_model.dart';
 import 'package:stripe/app/presenters/summary_presenter.dart';
+import 'package:stripe/app/utils/router.dart';
 
 class SummaryView extends StatefulWidget {
   const SummaryView({super.key});
@@ -20,6 +21,15 @@ class _SummaryViewState extends State<SummaryView> implements SummaryViewContrac
     super.initState();
     _presenter = SummaryPresenter(this);
     initSDK();
+  }
+
+  @override
+  void back(){
+    Navigator.of(context).pushNamed(Routes.CREATE_ORDER_VIEW_ROUTE);
+  }
+
+  unbind() async{
+    await _presenter.unbind();
   }
 
   @override
@@ -55,68 +65,71 @@ class _SummaryViewState extends State<SummaryView> implements SummaryViewContrac
     final mQuery = MediaQuery.of(context);
     final product = ModalRoute.of(context)!.settings.arguments as ProductModel;
 
-    return Scaffold(
-        body: SafeArea(
-            child: Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            SizedBox(
-              width: mQuery.size.width,
-              height: mQuery.size.height * 0.2,
-              child: Image.asset(
-                "assets/images/banner.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-            Positioned(
-              top: mQuery.size.height * 0.12,
-              child: SizedBox(
-                width: mQuery.size.width,
-                height: mQuery.size.height * 0.15,
-                child: Image.asset('assets/images/profile.png'),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: mQuery.size.height * 0.12,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+    return WillPopScope(
+      onWillPop: unbind(),
+      child: Scaffold(
+          body: SafeArea(
+              child: Column(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                          blurRadius: 5, color: Colors.grey, spreadRadius: 1)
-                    ]),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      product.name,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    Text("R\$ ${product.price}",
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue))
-                  ],
+              SizedBox(
+                width: mQuery.size.width,
+                height: mQuery.size.height * 0.2,
+                child: Image.asset(
+                  "assets/images/banner.png",
+                  fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(height: 12,),
-              ButtonApp(txt: "Pagar", onPressed: initPayment)
+              Positioned(
+                top: mQuery.size.height * 0.12,
+                child: SizedBox(
+                  width: mQuery.size.width,
+                  height: mQuery.size.height * 0.15,
+                  child: Image.asset('assets/images/profile.png'),
+                ),
+              ),
             ],
           ),
-        )
-      ],
-    )));
+          SizedBox(
+            height: mQuery.size.height * 0.12,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                            blurRadius: 5, color: Colors.grey, spreadRadius: 1)
+                      ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        product.name,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Text("R\$ ${product.price}",
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue))
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12,),
+                ButtonApp(txt: "Pagar", onPressed: initPayment)
+              ],
+            ),
+          )
+        ],
+      ))),
+    );
   }
 }
