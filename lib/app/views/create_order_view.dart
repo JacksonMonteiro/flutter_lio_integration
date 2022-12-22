@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stripe/app/models/product_model.dart';
+import 'package:stripe/app/utils/router.dart';
 
 class CreateOrderView extends StatefulWidget {
   static const routerName = "/create";
@@ -68,7 +70,9 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.SUMMARY_VIEW_ROUTE, arguments: ProductModel(name: "Arroz 101", price: 3.99));
+                        },
                         child: Container(
                           width: mQuery.size.width * 0.4,
                           padding: const EdgeInsets.all(10),

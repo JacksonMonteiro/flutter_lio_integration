@@ -15,10 +15,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: initRouter,
-      routes: {
-        Routes.HOME_VIEW_ROUTE: (context) => const HomeView(),
-        Routes.CREATE_ORDER_VIEW_ROUTE: (context) => const CreateOrderView()
-      }
+      routes: Routes.getAppRoutes(context)
     );
   }
 }
