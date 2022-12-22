@@ -19,16 +19,16 @@ class _SummaryViewState extends State<SummaryView> implements SummaryViewContrac
   @override
   void initState() {
     super.initState();
-    _presenter = SummaryPresenter(this);
+    _presenter = SummaryPresenter(this);  
     initSDK();
   }
 
   @override
   void back(){
-    Navigator.of(context).pushNamed(Routes.CREATE_ORDER_VIEW_ROUTE);
+    Navigator.of(context).pop();
   }
 
-  unbind() async{
+  unbind() async {
     await _presenter.unbind();
   }
 
@@ -66,7 +66,7 @@ class _SummaryViewState extends State<SummaryView> implements SummaryViewContrac
     final product = ModalRoute.of(context)!.settings.arguments as ProductModel;
 
     return WillPopScope(
-      onWillPop: unbind(),
+      onWillPop: () => unbind(),
       child: Scaffold(
           body: SafeArea(
               child: Column(

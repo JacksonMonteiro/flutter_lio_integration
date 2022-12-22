@@ -97,8 +97,9 @@ class LioUtil {
         orderManager.checkoutOrder(request, callbackPayment!!)
     }
 
-    fun unBind() {
+    fun unBind(result: MethodChannel.Result) {
         orderManager.unbind()
+        result.success(true)
     }
 
     fun updateOrder(order: Order?) {

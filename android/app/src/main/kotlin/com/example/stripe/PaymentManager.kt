@@ -46,10 +46,6 @@ class PaymentManager {
         }
     }
 
-    fun clearOrderManager() {
-        LioUtil.getInstance().unBind()
-    }
-
     companion object {
         var instance: PaymentManager? = null
 

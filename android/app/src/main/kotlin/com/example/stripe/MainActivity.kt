@@ -27,7 +27,7 @@ class MainActivity : FlutterActivity() {
                         PaymentManager.getInstance().ocPayment(100, result)
                     }
                     "unbind" -> {
-                        PaymentManager.getInstance().clearOrderManager()
+                        LioUtil.getInstance().unBind(result)
                     }
                     else -> {
                         result.notImplemented()
