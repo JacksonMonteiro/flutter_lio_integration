@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stripe/app/components/button.dart';
 import 'package:stripe/app/components/dialog_message.dart';
+import 'package:stripe/app/components/dialog_message_error.dart';
 import 'package:stripe/app/models/product_model.dart';
 import 'package:stripe/app/presenters/summary_presenter.dart';
 
@@ -26,6 +27,15 @@ class _SummaryViewState extends State<SummaryView> implements SummaryViewContrac
      showDialog(
         context: context,
         builder: (context) => DialogMessage(
+              message: message,
+            ));
+  }
+
+  @override
+  void messageError({required String message}) {
+    showDialog(
+        context: context,
+        builder: (context) => DialogMessageError(
               message: message,
             ));
   }

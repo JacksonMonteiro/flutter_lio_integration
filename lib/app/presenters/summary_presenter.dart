@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 
 abstract class SummaryViewContract {
   void message({required String message});
+  void messageError({required String message});
   Future<void> initSDK();
   void initPayment();
 }
@@ -18,7 +19,7 @@ class SummaryPresenter {
     try {
       await channel.invokeMethod("initSDK");
     } on PlatformException {
-      _contract.message(
+      _contract.messageError(
           message: "Erro ao conectar-se com os servidores da Cielo");
     }
   }
@@ -29,9 +30,11 @@ class SummaryPresenter {
       final result = await channel.invokeMethod("startPayment");
       if (result) {
         _contract.message(message: "Pagamento realizado com sucesso");
+      } else {
+        _contract.messageError(message: "O Seu pagamento foi cancelado, negado, ou ocorreu um erro no pagamento");
       }
     } on PlatformException {
-      _contract.message(message: "Erro ao conectar-se com a LIO");
+      _contract.messageError(message: "Erro ao conectar-se com a LIO");
     }
   }
 }

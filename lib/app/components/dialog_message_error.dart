@@ -4,18 +4,18 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class DialogMessage extends StatefulWidget {
+class DialogMessageError extends StatefulWidget {
   final String message;
   final Function()? closeDialog;
 
-  const DialogMessage({Key? key, required this.message, this.closeDialog})
+  const DialogMessageError({Key? key, required this.message, this.closeDialog})
       : super(key: key);
 
   @override
-  _DialogMessageState createState() => _DialogMessageState();
+  _DialogMessageErrorState createState() => _DialogMessageErrorState();
 }
 
-class _DialogMessageState extends State<DialogMessage> {
+class _DialogMessageErrorState extends State<DialogMessageError> {
   @override
   void dispose() {
     super.dispose();
@@ -39,7 +39,7 @@ class _DialogMessageState extends State<DialogMessage> {
                   widget.message,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.red,
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
