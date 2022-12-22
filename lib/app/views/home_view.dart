@@ -17,28 +17,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> implements HomeContract{
-  static const channel = MethodChannel("jacksonmonteiro.space/native");
 
   late HomePresenter homePresenter;
 
-  Future<void> initSDK() async {
-    try {
-      var response = await channel.invokeMethod("initSDK");
-      print('initSdkResponse: $response');
-    } on PlatformException {
-      print("Erro no Platform Channel");  
-    }
-  }
-
-
-  Future<void> _startPayment() async {
-    try {
-      final result = await channel.invokeMethod("startPayment");
-      print(result);
-    } on PlatformException {
-      print('Erro no platform Channel');
-    }
-  }
 
   @override
   void initState() {

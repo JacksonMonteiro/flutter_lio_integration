@@ -1,9 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:stripe/app/components/button.dart';
+import 'package:stripe/app/components/dialog_message.dart';
 import 'package:stripe/app/models/product_model.dart';
+import 'package:stripe/app/presenters/summary_presenter.dart';
 
-class SummaryView extends StatelessWidget {
+class SummaryView extends StatefulWidget {
   const SummaryView({super.key});
+
+  @override
+  State<SummaryView> createState() => _SummaryViewState();
+}
+
+class _SummaryViewState extends State<SummaryView> implements SummaryViewContract {
+  late SummaryPresenter _presenter;
+  
+  @override
+  void initState() {
+    super.initState();
+    _presenter = SummaryPresenter(this);
+    initSDK();
+  }
+
+  @override
+  void message({required String message}) {
+     showDialog(
+        context: context,
+        builder: (context) => DialogMessage(
+              message: message,
+            ));
+  }
+
+  @override
+  Future<void> initSDK() async {
+    await _presenter.initSDK();
+  }
+
+  @override
+  void initPayment() async {
+    await _presenter.startPayment();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +102,7 @@ class SummaryView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12,),
-              ButtonApp(txt: "Pagar", onPressed: () {
-                
-              })
+              ButtonApp(txt: "Pagar", onPressed: initPayment)
             ],
           ),
         )
