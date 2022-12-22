@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:stripe/app/views/create_order.dart';
+import 'package:stripe/app/utils/router.dart';
+import 'package:stripe/app/views/create_order_view.dart';
 import 'package:stripe/app/views/home_view.dart';
 
 class AppWidget extends StatelessWidget {
@@ -15,8 +16,8 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: initRouter,
       routes: {
-        HomeView.routerName: (context) => const HomeView(),
-        CreateOrder.routerName: (context) => const CreateOrder()
+        Routes.HOME_VIEW_ROUTE: (context) => const HomeView(),
+        Routes.CREATE_ORDER_VIEW_ROUTE: (context) => const CreateOrderView()
       }
     );
   }

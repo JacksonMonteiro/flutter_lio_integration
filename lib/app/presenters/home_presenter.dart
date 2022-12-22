@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class HomeContract{
-  goToCreateOrder(){}
-  goToListOrder(){}
-}
+abstract class HomeContract{}
 
 class HomePresenter{
   final HomeContract contract;

@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 
 class ButtonApp extends StatelessWidget {
-  const ButtonApp({super.key, required this.txt});
-
   final String txt;
+  final void Function()? onPressed;
+
+  const ButtonApp({super.key, required this.txt, required this.onPressed});
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ButtonApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(16)
           )
         ),
-        onPressed: (){},
+        onPressed: onPressed,
         child: Text(txt, style: TextStyle(fontSize: 18),),
       ),
     );

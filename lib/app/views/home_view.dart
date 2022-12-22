@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stripe/app/components/button.dart';
 import 'package:stripe/app/presenters/home_presenter.dart';
-import 'package:stripe/app/views/create_order.dart';
+import 'package:stripe/app/utils/router.dart';
+import 'package:stripe/app/views/create_order_view.dart';
 
 class HomeView extends StatefulWidget {
   static const routerName = "/home";
@@ -19,18 +20,6 @@ class _HomeViewState extends State<HomeView> implements HomeContract{
   static const channel = MethodChannel("jacksonmonteiro.space/native");
 
   late HomePresenter homePresenter;
-
-  @override
-  goToCreateOrder() {
-    Navigator.of(context)
-          .pushNamedAndRemoveUntil(CreateOrder.routerName, (route) => false);
-  }
-  
-  @override
-  goToListOrder() {
-    
-  }
-
 
   Future<void> initSDK() async {
     try {
@@ -81,10 +70,10 @@ class _HomeViewState extends State<HomeView> implements HomeContract{
                   //physics: ,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      ButtonApp(txt: "Criar pedido",),
-                      SizedBox(height: 8,),
-                      ButtonApp(txt: "Listar pedidos",),
+                    children:  [
+                      ButtonApp(txt: "Criar pedido", onPressed: () {
+                        Navigator.of(context).pushNamed(Routes.CREATE_ORDER_VIEW_ROUTE);
+                      }),
                     ],
                   ),
                 ),
