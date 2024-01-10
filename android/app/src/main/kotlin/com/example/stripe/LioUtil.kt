@@ -33,7 +33,7 @@ class LioUtil {
     fun initSDK(context: Context?, result: MethodChannel.Result) {
         /*======================= Credenciais ======================*/
         credentials =
-            Credentials("loIDeZOSihHEaDmutRHUPl3dxJzKIQTgHJ5yncMHqLUNf241vz", "ZjpVpQiUNcO4BLUsnSmwqFCL8AExTqTEZ9kl9vm9lDAdnd3MOy")
+            Credentials("", "")
         /*======================= Criando OrderManager ======================*/orderManager =
             OrderManager(
                 credentials,
